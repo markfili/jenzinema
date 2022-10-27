@@ -1,5 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 
+import 'genre.dart';
+
 part 'movie.g.dart';
 
 @JsonSerializable()
@@ -9,6 +11,8 @@ class Movie {
   final String? backdropPath;
   @JsonKey(name: "genre_ids")
   final List<int>? genreIds;
+  @JsonKey(ignore: true)
+  late final List<Genre> genres;
   final int? id;
   @JsonKey(name: "original_language")
   final String? originalLanguage;
