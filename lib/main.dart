@@ -6,6 +6,7 @@ import 'package:loggy/loggy.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'app/inject_dependencies.dart' as app;
+import 'ui/common/helpers/themes.dart';
 import 'ui/screens/movies/movies_screen.dart';
 
 void main() async {
@@ -40,9 +41,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: Themes.jtheme,
       home: const MoviesScreen(),
     );
   }
