@@ -2,43 +2,67 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../../common/models/movie.dart';
-import 'movie_image.dart';
+import '../../../common/helpers/insets.dart';
+import '../../../common/helpers/j_colors.dart';
+import '../../../common/helpers/text_styles.dart';
+import '../../movie_details/movie_details_screen.dart';
+import 'movie_genre.dart';
+import 'movie_item_image.dart';
 
 class MovieItem extends ConsumerWidget {
   final Movie movie;
 
-  const MovieItem(this.movie, {super.key});
+  MovieItem(this.movie, {super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return ListTile(
       contentPadding: EdgeInsets.zero,
+      onTap: () => Navigator.push(context, MovieDetailsScreen.route(movie)),
       title: Row(
-        mainAxisSize: MainAxisSize.max,
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Flexible(child: MovieImage(movie.backdropPath)),
-          const SizedBox(width: 16),
-          Flexible(
+          MovieItemImage(movie.backdropPath),
+          const SizedBox(width: Insets.large),
+          Expanded(
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Flexible(child: Text(movie.title ?? "Sorry, we're missing a title")),
+                Flexible(
+                  child: Text(
+                    movie.title ?? "Sorry, we're missing a title",
+                    style: TextStyles.title,
+                  ),
+                ),
+                const SizedBox(
+                  height: Insets.small,
+                ),
                 Flexible(
                   child: Row(
+                    mainAxisSize: MainAxisSize.max,
                     children: [
-                      const Icon(
+                      Icon(
                         Icons.star,
-                        color: Color(0xFFf2cf16),
+                        color: JColors.star,
                         size: 16,
                       ),
                       const SizedBox(
-                        width: 8,
+                        width: Insets.medium,
                       ),
-                      Text("${movie.voteAverage} / 10 IMDb"),
+                      Text(
+                        "${movie.voteAverage} / 10 IMDb",
+                        style: TextStyles.imdb,
+                      ),
                     ],
+                  ),
+                ),
+                const SizedBox(
+                  height: Insets.small + Insets.medium,
+                ),
+                Flexible(
+                  child: Wrap(
+                    spacing: Insets.medium,
+                    children: movie.genres.map((e) => MovieGenre(e.name)).toList(),
                   ),
                 ),
               ],
