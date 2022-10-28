@@ -15,7 +15,7 @@ class MoviesScreen extends ConsumerWidget {
     final presenter = ref.watch(moviesPresenter);
     var scrollController = ScrollController();
     scrollController.addListener(() {
-      if (scrollController.position.maxScrollExtent == scrollController.position.pixels) {
+      if ((scrollController.position.maxScrollExtent - scrollController.position.pixels) < 200) {
         if (!ref.read(moviesPresenter).state.isLoading) {
           ref.read(moviesPaginationIndexProvider.notifier).increment();
         }
@@ -23,21 +23,10 @@ class MoviesScreen extends ConsumerWidget {
     });
     return Scaffold(
       appBar: AppBar(
-        bottom: presenter.state.maybeWhen(
-          loading: (movies) => const PreferredSize(
-            preferredSize: Size.fromHeight(8),
-            child: LinearProgressIndicator(),
-          ),
-          orElse: () => null,
+        title: Image.asset(
+          "assets/icons/icon_app_bar_logo.png",
+          height: 30,
         ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              ref.read(moviesPaginationIndexProvider.notifier).increment();
-            },
-            icon: const Icon(Icons.add),
-          )
-        ],
       ),
       body: presenter.state.when(
         initial: () => const LoadingBody(),

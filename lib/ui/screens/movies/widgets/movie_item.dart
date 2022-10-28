@@ -12,7 +12,7 @@ import 'movie_item_image.dart';
 class MovieItem extends ConsumerWidget {
   final Movie movie;
 
-  MovieItem(this.movie, {super.key});
+  const MovieItem(this.movie, {super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -20,6 +20,7 @@ class MovieItem extends ConsumerWidget {
       contentPadding: EdgeInsets.zero,
       onTap: () => Navigator.push(context, MovieDetailsScreen.route(movie)),
       title: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           MovieItemImage(movie.backdropPath),
           const SizedBox(width: Insets.large),
@@ -62,6 +63,7 @@ class MovieItem extends ConsumerWidget {
                 Flexible(
                   child: Wrap(
                     spacing: Insets.medium,
+                    runSpacing: Insets.small,
                     children: movie.genres.map((e) => MovieGenre(e.name)).toList(),
                   ),
                 ),
