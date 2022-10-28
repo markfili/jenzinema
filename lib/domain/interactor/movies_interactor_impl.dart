@@ -14,13 +14,15 @@ class MoviesInteractorImpl implements MoviesInteractor {
   }
 
   @override
-  Future<List<Movie>> fetchPopularMoviesPaged({int page = 1}) async {
-    var response = await apiRepository.fetchPopularMovies(page: page);
+  Future<List<Movie>> fetchPopularMoviesPaged(int page) async {
+    var response = await apiRepository.fetchPopularMovies(page);
     if (genres.isEmpty) {
       genres.addAll((await apiRepository.fetchGenres()).genres);
     }
     movies.addAll(response.movies.map((movie) {
-      movie.genres = genres.where((element) => (movie.genreIds ?? []).contains(element.id)).toList();
+      if (movie.genreIds != null) {
+        movie.genres.addAll(genres.where((genre) => movie.genreIds!.contains(genre.id)));
+      }
       return movie;
     }));
     return movies;
