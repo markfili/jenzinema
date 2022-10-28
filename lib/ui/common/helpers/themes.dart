@@ -10,5 +10,12 @@ class Themes {
     brightness: Brightness.dark,
     fontFamily: Fonts.sfProDisplay,
     scaffoldBackgroundColor: JColors.background,
+    colorScheme: ColorScheme.dark(primary: JColors.accent),
+    scrollbarTheme: ScrollbarThemeData(thumbColor: MaterialStatePropertyAll(JColors.accent)),
+    appBarTheme: AppBarTheme(
+      backgroundColor: JColors.background,
+      shadowColor: Colors.transparent,
+      elevation: 0,
+    ),
   );
 }

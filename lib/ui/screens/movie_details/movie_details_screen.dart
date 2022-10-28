@@ -6,6 +6,7 @@ import '../../../common/models/movie.dart';
 import '../../common/helpers/insets.dart';
 import '../../common/helpers/j_colors.dart';
 import '../../common/helpers/text_styles.dart';
+import '../../common/widgets/back_button.dart';
 import '../movies/widgets/movie_genre.dart';
 
 class MovieDetailsScreen extends ConsumerWidget {
@@ -21,10 +22,28 @@ class MovieDetailsScreen extends ConsumerWidget {
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
+            leading: const JBackButton(),
+            pinned: true,
+            floating: true,
             flexibleSpace: Image.network(
               "${Config.movieBackdropUrl}${movie.posterPath}",
               fit: BoxFit.cover,
             ),
+            bottom: PreferredSize(
+              preferredSize: const Size.fromHeight(20),
+              child: Container(
+                height: 20,
+                decoration: BoxDecoration(
+                  color: JColors.background,
+                  borderRadius: const BorderRadius.only(topRight: Radius.circular(20), topLeft: Radius.circular(20)),
+                  border: Border.all(
+                    color: JColors.background,
+                    width: 0, // hack to remove space between appbar's bottom and list underneath
+                  ),
+                ),
+              ),
+            ),
+            collapsedHeight: 80,
             expandedHeight: 500,
           ),
           SliverList(
@@ -44,7 +63,7 @@ class MovieDetailsScreen extends ConsumerWidget {
                         style: TextStyles.titleDetails,
                       ),
                       const SizedBox(
-                        height: Insets.small,
+                        height: Insets.medium,
                       ),
                       Row(
                         mainAxisSize: MainAxisSize.max,
@@ -68,10 +87,11 @@ class MovieDetailsScreen extends ConsumerWidget {
                       ),
                       Wrap(
                         spacing: Insets.medium,
+                        runSpacing: Insets.small,
                         children: movie.genres.map((e) => MovieGenre(e.name)).toList(),
                       ),
                       const SizedBox(
-                        height: Insets.small + Insets.medium,
+                        height: Insets.xlarge + Insets.medium,
                       ),
                       Text(
                         "Description",
@@ -80,9 +100,12 @@ class MovieDetailsScreen extends ConsumerWidget {
                       const SizedBox(
                         height: Insets.medium,
                       ),
-                      Text(movie.overview ?? ''),
+                      Text(
+                        movie.overview ?? '',
+                        style: TextStyles.overview,
+                      ),
                       const SizedBox(
-                        height: Insets.large + Insets.small,
+                        height: Insets.xlarge,
                       ),
                     ],
                   ),
