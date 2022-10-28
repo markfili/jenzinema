@@ -23,4 +23,13 @@ class TextStyles {
   );
 
   static TextStyle heading = title;
+  static TextStyle pageTitle = title.copyWith(
+    fontSize: 22,
+  );
+
+  static TextStyle overview = const TextStyle(
+    fontWeight: FontWeight.w300,
+    fontSize: 13,
+    height: 1.8,
+  );
 }
