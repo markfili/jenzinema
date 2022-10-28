@@ -7,9 +7,9 @@ part 'genres_data_response.g.dart';
 
 @JsonSerializable()
 class GenresDataResponse extends Equatable {
-  List<Genre> genres;
+  final List<Genre> genres;
 
-  GenresDataResponse(this.genres);
+  const GenresDataResponse(this.genres);
 
   factory GenresDataResponse.fromJson(Map<String, dynamic> json) => _$GenresDataResponseFromJson(json);
 

@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -8,8 +7,6 @@ import '../../common/request_provider/request_provider.dart';
 import 'pagination_index_provider.dart';
 
 final moviesPresenter = ChangeNotifierProvider.autoDispose<MoviesPresenter>((ref) {
-  final cancelToken = CancelToken();
-  ref.onDispose(cancelToken.cancel);
   return MoviesPresenter(ref, GetIt.instance.get());
 });
 
