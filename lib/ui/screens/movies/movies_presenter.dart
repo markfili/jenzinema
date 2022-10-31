@@ -14,14 +14,21 @@ class MoviesPresenter extends RequestProvider<List<Movie>> {
   final MoviesInteractor moviesInteractor;
   final Ref ref;
   late final ProviderSubscription subscription;
+  final List<Movie> movies = List.empty(growable: true);
 
   MoviesPresenter(this.ref, this.moviesInteractor) {
-    loadPopularMovies(ref.read(moviesPaginationIndexProvider));
-    subscription = ref.listen(moviesPaginationIndexProvider, (_, next) => loadPopularMovies(next));
+    loadPopularMovies();
   }
 
-  Future<void> loadPopularMovies(int page) async {
-    return executeRequest(requestBuilder: () => moviesInteractor.fetchPopularMoviesPaged(page));
+  Future<void> loadPopularMovies() async {
+    return executeRequest(requestBuilder: () async {
+      var newMovies = await moviesInteractor.fetchPopularMoviesPaged(ref.read(moviesPaginationIndexProvider));
+      if (newMovies != null && newMovies.isNotEmpty) {
+        movies.addAll(newMovies);
+        ref.read(moviesPaginationIndexProvider.notifier).increment();
+      }
+      return movies;
+    });
   }
 
   @override

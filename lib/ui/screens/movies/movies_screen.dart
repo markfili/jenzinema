@@ -4,7 +4,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../common/request_provider/request_state.dart';
 import '../../common/widgets/loading_body_widget.dart';
 import 'movies_presenter.dart';
-import 'pagination_index_provider.dart';
 import 'widgets/movies_list.dart';
 
 class MoviesScreen extends ConsumerWidget {
@@ -17,7 +16,7 @@ class MoviesScreen extends ConsumerWidget {
     scrollController.addListener(() {
       if ((scrollController.position.maxScrollExtent - scrollController.position.pixels) < 200) {
         if (!ref.read(moviesPresenter).state.isLoading) {
-          ref.read(moviesPaginationIndexProvider.notifier).increment();
+          ref.read(moviesPresenter).loadPopularMovies();
         }
       }
     });
