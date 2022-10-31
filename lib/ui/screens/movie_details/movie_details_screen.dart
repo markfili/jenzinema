@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -25,8 +26,8 @@ class MovieDetailsScreen extends ConsumerWidget {
             leading: const JBackButton(),
             pinned: true,
             floating: true,
-            flexibleSpace: Image.network(
-              "${Config.movieBackdropUrl}${movie.posterPath}",
+            flexibleSpace: CachedNetworkImage(
+              imageUrl: "${Config.movieBackdropUrl}${movie.posterPath}",
               fit: BoxFit.cover,
             ),
             bottom: PreferredSize(
