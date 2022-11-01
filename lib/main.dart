@@ -11,7 +11,7 @@ import 'common/models/genre.dart';
 import 'common/models/movie.dart';
 import 'source/local/models/page.dart' as page;
 import 'ui/common/helpers/themes.dart';
-import 'ui/screens/movies/movies_screen.dart';
+import 'ui/screens/home/home_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,7 +22,7 @@ void main() async {
   EquatableConfig.stringify = true;
   runApp(
     const ProviderScope(
-      child: MyApp(),
+      child: JApp(),
     ),
   );
 }
@@ -48,15 +48,15 @@ Future<void> _initHive() async {
   await Hive.openBox<page.Page>(Config.dbPages);
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class JApp extends StatelessWidget {
+  const JApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: Themes.jtheme,
-      home: const MoviesScreen(),
+      home: const HomeScreen(),
     );
   }
 }
