@@ -8,4 +8,6 @@ class JColors {
   static Color genre = const Color(0x33EC9B3E);
 
   static Color background = const Color(0xFF0E1324);
+
+  static Color bottomBarBackground = const Color(0xFF010510);
 }

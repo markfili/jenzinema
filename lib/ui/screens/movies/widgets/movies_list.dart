@@ -3,15 +3,18 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../../common/models/movie.dart';
 import '../../../common/helpers/insets.dart';
-import '../../../common/helpers/text_styles.dart';
-import '../movies_presenter.dart';
+import '../presenters/movies_presenter.dart';
 import 'movie_item.dart';
 
 class MoviesList extends ConsumerWidget {
   final List<Movie> movies;
-  final ScrollController scrollController;
+  final ScrollController? scrollController;
 
-  const MoviesList(this.movies, this.scrollController, {Key? key}) : super(key: key);
+  const MoviesList(
+    this.movies, {
+    this.scrollController,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -20,19 +23,12 @@ class MoviesList extends ConsumerWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.all(Insets.large + Insets.small),
-              child: Text(
-                "Popular",
-                style: TextStyles.pageTitle,
-              ),
-            ),
             Expanded(
               child: Scrollbar(
                 child: ListView.separated(
                   controller: scrollController,
                   itemCount: movies.length,
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  padding: const EdgeInsets.all(Insets.large + Insets.small),
                   itemBuilder: (_, index) => MovieItem(movies[index]),
                   separatorBuilder: (_, __) => SizedBox.fromSize(size: const Size.fromHeight(20)),
                 ),

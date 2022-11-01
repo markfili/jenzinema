@@ -6,6 +6,7 @@ import '../../../common/helpers/insets.dart';
 import '../../../common/helpers/j_colors.dart';
 import '../../../common/helpers/text_styles.dart';
 import '../../movie_details/movie_details_screen.dart';
+import 'movie_favorite_button.dart';
 import 'movie_genre.dart';
 import 'movie_item_image.dart';
 
@@ -19,6 +20,7 @@ class MovieItem extends ConsumerWidget {
     return ListTile(
       contentPadding: EdgeInsets.zero,
       onTap: () => Navigator.push(context, MovieDetailsScreen.route(movie)),
+      trailing: MovieFavoriteButton(movie),
       title: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

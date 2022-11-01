@@ -9,7 +9,7 @@ class MoviesRepositoryImpl implements MoviesRepository {
   MoviesRepositoryImpl(this._apiClient);
 
   @override
-  Future<MoviesDataResponse> fetchPopularMovies({int? page}) async {
+  Future<MoviesDataResponse> fetchPopularMovies(int page) async {
     return MoviesDataResponse.fromJson(
       (await _apiClient.get('/movie/popular', queryParameters: {"page": page})).data,
     );

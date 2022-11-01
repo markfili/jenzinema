@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -7,6 +8,7 @@ import '../../common/helpers/insets.dart';
 import '../../common/helpers/j_colors.dart';
 import '../../common/helpers/text_styles.dart';
 import '../../common/widgets/back_button.dart';
+import '../movies/widgets/movie_favorite_button.dart';
 import '../movies/widgets/movie_genre.dart';
 
 class MovieDetailsScreen extends ConsumerWidget {
@@ -25,8 +27,8 @@ class MovieDetailsScreen extends ConsumerWidget {
             leading: const JBackButton(),
             pinned: true,
             floating: true,
-            flexibleSpace: Image.network(
-              "${Config.movieBackdropUrl}${movie.posterPath}",
+            flexibleSpace: CachedNetworkImage(
+              imageUrl: "${Config.movieBackdropUrl}${movie.posterPath}",
               fit: BoxFit.cover,
             ),
             bottom: PreferredSize(
@@ -58,37 +60,49 @@ class MovieDetailsScreen extends ConsumerWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        movie.title ?? "Sorry, we're missing a title",
-                        style: TextStyles.titleDetails,
-                      ),
-                      const SizedBox(
-                        height: Insets.medium,
-                      ),
                       Row(
-                        mainAxisSize: MainAxisSize.max,
                         children: [
-                          Icon(
-                            Icons.star,
-                            color: JColors.star,
-                            size: 16,
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  movie.title ?? "Sorry, we're missing a title",
+                                  style: TextStyles.titleDetails,
+                                ),
+                                const SizedBox(
+                                  height: Insets.medium,
+                                ),
+                                Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Icon(
+                                      Icons.star,
+                                      color: JColors.star,
+                                      size: 16,
+                                    ),
+                                    const SizedBox(
+                                      width: Insets.medium,
+                                    ),
+                                    Text(
+                                      "${movie.voteAverage} / 10 IMDb",
+                                      style: TextStyles.imdb,
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: Insets.small + Insets.medium,
+                                ),
+                                Wrap(
+                                  spacing: Insets.medium,
+                                  runSpacing: Insets.small,
+                                  children: movie.genres.map((e) => MovieGenre(e.name)).toList(),
+                                ),
+                              ],
+                            ),
                           ),
-                          const SizedBox(
-                            width: Insets.medium,
-                          ),
-                          Text(
-                            "${movie.voteAverage} / 10 IMDb",
-                            style: TextStyles.imdb,
-                          ),
+                          MovieFavoriteButton(movie),
                         ],
-                      ),
-                      const SizedBox(
-                        height: Insets.small + Insets.medium,
-                      ),
-                      Wrap(
-                        spacing: Insets.medium,
-                        runSpacing: Insets.small,
-                        children: movie.genres.map((e) => MovieGenre(e.name)).toList(),
                       ),
                       const SizedBox(
                         height: Insets.xlarge + Insets.medium,

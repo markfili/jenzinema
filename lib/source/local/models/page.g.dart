@@ -1,35 +1,35 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'genre.dart';
+part of 'page.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class GenreAdapter extends TypeAdapter<Genre> {
+class PageAdapter extends TypeAdapter<Page> {
   @override
-  final int typeId = 1;
+  final int typeId = 2;
 
   @override
-  Genre read(BinaryReader reader) {
+  Page read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return Genre(
+    return Page(
       fields[0] as int,
-      fields[1] as String,
+      (fields[1] as List).cast<Movie>(),
     );
   }
 
   @override
-  void write(BinaryWriter writer, Genre obj) {
+  void write(BinaryWriter writer, Page obj) {
     writer
       ..writeByte(2)
       ..writeByte(0)
-      ..write(obj.id)
+      ..write(obj.number)
       ..writeByte(1)
-      ..write(obj.name);
+      ..write(obj.movies);
   }
 
   @override
@@ -38,21 +38,7 @@ class GenreAdapter extends TypeAdapter<Genre> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is GenreAdapter &&
+      other is PageAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
-
-// **************************************************************************
-// JsonSerializableGenerator
-// **************************************************************************
-
-Genre _$GenreFromJson(Map<String, dynamic> json) => Genre(
-      json['id'] as int,
-      json['name'] as String,
-    );
-
-Map<String, dynamic> _$GenreToJson(Genre instance) => <String, dynamic>{
-      'id': instance.id,
-      'name': instance.name,
-    };
