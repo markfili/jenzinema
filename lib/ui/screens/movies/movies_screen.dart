@@ -3,7 +3,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../common/request_provider/request_state.dart';
 import '../../common/widgets/loading_body_widget.dart';
-import 'movies_presenter.dart';
+import '../home/widgets/page_title.dart';
+import 'presenters/movies_presenter.dart';
 import 'widgets/movies_list.dart';
 
 class MoviesScreen extends ConsumerWidget {
@@ -12,29 +13,29 @@ class MoviesScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final presenter = ref.watch(moviesPresenter);
-    var scrollController = ScrollController();
-    scrollController.addListener(() {
-      if ((scrollController.position.maxScrollExtent - scrollController.position.pixels) < 200) {
+    var controller = ScrollController();
+    controller.addListener(() {
+      if ((controller.position.maxScrollExtent - controller.position.pixels) < 200) {
         if (!ref.read(moviesPresenter).state.isLoading) {
           ref.read(moviesPresenter).loadPopularMovies();
         }
       }
     });
-    return Scaffold(
-      appBar: AppBar(
-        title: Image.asset(
-          "assets/icons/icon_app_bar_logo.png",
-          height: 30,
+    return Column(
+      children: [
+        const PageTitle("Popular"),
+        Expanded(
+          child: presenter.state.when(
+            initial: () => const LoadingBody(),
+            loading: (movies) =>
+                movies != null ? MoviesList(movies, scrollController: controller) : const LoadingBody(),
+            success: (movies) => MoviesList(movies, scrollController: controller),
+            failure: (error) => Center(
+              child: Text(error.toString()),
+            ),
+          ),
         ),
-      ),
-      body: presenter.state.when(
-        initial: () => const LoadingBody(),
-        loading: (movies) => movies != null ? MoviesList(movies, scrollController) : const LoadingBody(),
-        success: (movies) => MoviesList(movies, scrollController),
-        failure: (error) => Center(
-          child: Text(error.toString()),
-        ),
-      ),
+      ],
     );
   }
 }
