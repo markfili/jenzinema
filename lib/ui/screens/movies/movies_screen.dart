@@ -3,7 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../common/request_provider/request_state.dart';
 import '../../common/widgets/loading_body_widget.dart';
-import '../home/widgets/page_title.dart';
+import '../../common/widgets/screen_page.dart';
 import 'presenters/movies_presenter.dart';
 import 'widgets/movies_list.dart';
 
@@ -21,21 +21,16 @@ class MoviesScreen extends ConsumerWidget {
         }
       }
     });
-    return Column(
-      children: [
-        const PageTitle("Popular"),
-        Expanded(
-          child: presenter.state.when(
-            initial: () => const LoadingBody(),
-            loading: (movies) =>
-                movies != null ? MoviesList(movies, scrollController: controller) : const LoadingBody(),
-            success: (movies) => MoviesList(movies, scrollController: controller),
-            failure: (error) => Center(
-              child: Text(error.toString()),
-            ),
-          ),
+    return ScreenPage(
+      title: "Popular",
+      body: presenter.state.when(
+        initial: () => const LoadingBody(),
+        loading: (movies) => movies != null ? MoviesList(movies, scrollController: controller) : const LoadingBody(),
+        success: (movies) => MoviesList(movies, scrollController: controller),
+        failure: (error) => Center(
+          child: Text(error.toString()),
         ),
-      ],
+      ),
     );
   }
 }

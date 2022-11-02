@@ -32,4 +32,8 @@ class TextStyles {
     fontSize: 13,
     height: 1.8,
   );
+
+  static TextStyle networkStatus = const TextStyle(
+    fontSize: 10,
+  );
 }

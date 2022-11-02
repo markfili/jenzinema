@@ -5,6 +5,7 @@ import '../../common/helpers/j_colors.dart';
 import '../movies/favorites_screen.dart';
 import '../movies/movies_screen.dart';
 import 'widgets/nav_bar_item.dart';
+import 'widgets/network_status_icon.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -35,9 +36,15 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       length: barItems.length,
       child: Scaffold(
         appBar: AppBar(
-          title: Image.asset(
-            "assets/icons/icon_app_bar_logo.png",
-            height: 30,
+          title: Row(
+            children: [
+              Image.asset(
+                "assets/icons/icon_app_bar_logo.png",
+                height: 30,
+              ),
+              const Spacer(),
+              const NetworkStatusIcon(),
+            ],
           ),
         ),
         body: Column(
