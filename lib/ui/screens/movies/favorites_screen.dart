@@ -15,7 +15,15 @@ class FavoritesScreen extends ConsumerWidget {
     var movies = ref.watch(favoritesPresenter);
     return ScreenPage(
       title: "Favorites",
-      body: MoviesList(movies),
+      body: Visibility(
+        visible: movies != null && movies.isNotEmpty,
+        replacement: const Center(
+          child: Text(
+            "Add some movies to favorites from the 'Movies' screen",
+          ),
+        ),
+        child: MoviesList(movies),
+      ),
     );
   }
 }
