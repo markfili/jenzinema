@@ -22,9 +22,9 @@ class MoviesInteractorImpl implements MoviesInteractor {
   Future<List<Movie>?> fetchPopularMoviesPaged(int page) async {
     var box = await Hive.openBox<Page>(Config.dbPages);
     List<Movie>? retrievedMovies;
-    await _checkGenres();
     try {
       var response = await apiRepository.fetchPopularMovies(page);
+      await _checkGenres();
       retrievedMovies = _parseResponseMovies(response);
       box.put(response.page, Page(response.page, retrievedMovies));
     } on DioError {
