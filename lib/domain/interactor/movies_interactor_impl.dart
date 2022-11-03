@@ -51,4 +51,10 @@ class MoviesInteractorImpl implements MoviesInteractor {
       return movie;
     }).toList();
   }
+
+  @override
+  Future<List<Movie>?> fetchCachedPopularMoviesPaged(int page) async {
+    var box = await Hive.openBox<Page>(Config.dbPages);
+    return box.get(page)?.movies;
+  }
 }
