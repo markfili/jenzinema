@@ -15,6 +15,7 @@ void injectDependencies(GetIt getIt) {
     () => Dio(
       BaseOptions(
         baseUrl: Config.apiUrl,
+        connectTimeout: 5000,
       ),
     )
       ..interceptors.add(LoggyDioInterceptor())
